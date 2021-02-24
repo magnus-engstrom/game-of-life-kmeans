@@ -14,7 +14,7 @@ class Cell:
     
     def step(self, neighbors):
         self.render = True
-        if neighbors['count'] == 3 and self.age < 100:
+        if neighbors['count'] == 3 and self.age < 10:
             if not self.active:
                 self.active = True
                 self.age = 1
@@ -25,13 +25,14 @@ class Cell:
                 if len(new_genes) > 0:
                     self.genes = np.mean(np.array(new_genes),  axis=0) * 0.95 + np.array(self.genes) * 0.05
                     self.genes = np.clip(self.genes, 0, 240)
-                    if np.random.uniform(0.0,1.0) <= self.mutation_propability:
-                        self.genes *= 1.1
             return
         if neighbors['count'] == 2 and self.active and self.age < 10:
             self.age += 1
             if random.randint(0,10) > 9:
-                self.genes = np.array(self.genes) * np.random.uniform(0.8,1.15)
+                self.genes = np.array(self.genes) * np.random.uniform(0.8,1.1)
+            if np.random.uniform(0.0,1.0) <= self.mutation_propability:
+                self.genes *= 1.16
+                self.genes *= np.random.default_rng().uniform(0.9,1.1,3)
             return
         if np.sum(self.genes) > 250 and self.active:
             self.genes *= np.random.uniform(0.8,1.1)

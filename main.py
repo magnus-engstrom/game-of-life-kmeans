@@ -9,17 +9,17 @@ import numpy as np
 import math
 from sklearn.cluster import KMeans
 
-WIDTH = int(4*35.0)
-HEIGHT = int(2.5*35.0)
-CELL_SIZE = 5
-N_COLORS = 1 #np.random.randint(1, 4)
-VOID_CLUSTERS = 10 #np.random.randint(1, 41)
-CLUSTER_DENSITY = 0.3 #np.random.uniform(0.3,0.55)
+WIDTH = int(4*25.0)
+HEIGHT = int(2.5*25.0)
+CELL_SIZE = 7
+N_COLORS = np.random.randint(1, 7)
+VOID_CLUSTERS = np.random.randint(1, 41)
+CLUSTER_DENSITY = np.random.uniform(0.25,0.55)
 NOISE_CELLS = 0.05 #np.random.uniform(0.0,0.01)
-MUTATION_PROBABILITY = np.random.uniform(0.05,0.3)
-COLOR_SEEDS = np.array([[1.0, 1.0, 1.0]])
+MUTATION_PROBABILITY = 0.2 #np.random.uniform(0.05,0.3)
+COLOR_SEEDS = np.array([[1.0, 1.0, 0.9]])
 BG_COLOR = np.random.default_rng().uniform(5.0,30.0,3) * COLOR_SEEDS[np.random.randint(0, COLOR_SEEDS.shape[0])]
-MAX_GENREATIONS = 500
+MAX_GENREATIONS = 550
 grid = []
 generation = 0
 
@@ -30,18 +30,16 @@ print("NOISE_CELLS", NOISE_CELLS)
 grid = []
 colors = []
 for _ in range(N_COLORS):
-    colors.append(np.random.default_rng().uniform(20.0,125.0,3) * COLOR_SEEDS[np.random.randint(0, COLOR_SEEDS.shape[0])])
-    #colors.append([70.0, 30.0, 0.0])
+    colors.append(np.random.default_rng().uniform(10.0,110.0,3) * COLOR_SEEDS[np.random.randint(0, COLOR_SEEDS.shape[0])])
 for _ in range(VOID_CLUSTERS):
     colors.append(np.array([0, 0, 0]))
-
 
 X_train = []
 for y in range(HEIGHT):
     row = []
     for x in range(WIDTH):
         active = False
-        if np.random.uniform(0,1.0) <= CLUSTER_DENSITY:
+        if np.random.uniform(0,1.0) <= np.random.uniform(0.25,0.55):
             active = True
         if active:
             X_train.append(np.array([x, y]) / (WIDTH, HEIGHT))
@@ -110,9 +108,9 @@ if __name__ == "__main__":
  
                         if np.sum(grid[y][x].genes) < 20:
                             grid[y][x].active = False
-                        else:
-                            if np.random.uniform(0,1.0) <= NOISE_CELLS:
-                                grid[y][x].genes * np.random.default_rng().uniform(0.5,1.5,3) * COLOR_SEEDS[np.random.randint(0, COLOR_SEEDS.shape[0])]
+                        # else:
+                        #     if np.random.uniform(0,1.0) <= NOISE_CELLS:
+                        #         grid[y][x].genes * np.random.default_rng().uniform(0.5,1.5,3) * COLOR_SEEDS[np.random.randint(0, COLOR_SEEDS.shape[0])]
                     grid[y][x].step(neighbors_grid[y][x])
 
             grid_renderer.draw(grid)
