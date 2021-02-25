@@ -14,23 +14,15 @@ class Renderer:
                 rect = [x*self.scale, y*self.scale, self.scale, self.scale]
                 pygame.draw.rect(self.display, bg_color * np.random.uniform(0.8,1.2), rect)
                 pygame.draw.rect(self.display, bg_color * np.random.uniform(0.8,1.2), rect, 1)
-                # pygame.draw.line(self.display, np.rint(bg_color * np.random.uniform(0.5,1.5)), 
-                # [x*self.scale + np.random.uniform(0.0,self.scale), y*self.scale + np.random.uniform(0.0,self.scale)], 
-                # [x*self.scale + np.random.uniform(0.0,self.scale), y*self.scale + np.random.uniform(0.0,self.scale)], 
-                # 1)
 
     def draw(self, grid):
         for row in grid:
             for cell in row:
                 if cell.render and np.sum(cell.genes) > 50:
-                    #rect = [cell.x*self.scale, cell.y*self.scale, self.scale, self.scale]
-                    #pygame.draw.circle(self.display, np.clip(np.rint(cell.genes), 0, 255), (cell.x*self.scale + self.scale / 2, cell.y*self.scale + self.scale / 2), self.scale*np.random.uniform(1.0,1.1), 1)
                     if np.random.uniform(0.0,1.0) > 0.98:
                         pygame.draw.line(self.display, np.clip(np.rint(cell.genes), 0, 255), 
                         [cell.x*self.scale + np.random.uniform(0.0,self.scale), cell.y*self.scale + np.random.uniform(0.0,self.scale)], 
                         [cell.x*self.scale + np.random.uniform(0.0,self.scale), cell.y*self.scale + np.random.uniform(0.0,self.scale)], 
                         1)
-                    #pygame.draw.circle(self.display, np.clip(np.rint(cell.genes), 0, 255), (cell.x*self.scale + self.scale / 2, cell.y*self.scale + self.scale / 2), self.scale*0.45)
-                    #pygame.draw.rect(self.display, np.clip(np.rint(cell.genes), 0, 255), rect)
         pygame.display.update()
         self.clock.tick(60)

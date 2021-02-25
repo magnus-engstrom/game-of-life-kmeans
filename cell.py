@@ -7,7 +7,6 @@ class Cell:
         self.y = y
         self.active = active
         self.genes = start_color * 0.2
-        self.original_genes = None
         self.render = True
         self.age = 0
         self.mutation_propability = mutation_propability
@@ -32,7 +31,7 @@ class Cell:
                 self.genes = np.array(self.genes) * np.random.uniform(0.8,1.1)
             if np.random.uniform(0.0,1.0) <= self.mutation_propability:
                 self.genes *= 1.16
-                self.genes *= np.random.default_rng().uniform(0.9,1.1,3)
+                self.genes *= np.random.default_rng().uniform(0.93,1.1,3)
             return
         if np.sum(self.genes) > 250 and self.active:
             self.genes *= np.random.uniform(0.8,1.1)
